@@ -1,0 +1,45 @@
+<div class="d-flex justify-content-between">
+  <button routerLink="/register" mat-raised-button >
+   <i class="fa fa-arrow-left" aria-hidden="true"></i>
+   Back to register
+  </button>
+  
+ 
+</div>
+
+  
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Invoice No</th>
+      <th>Email</th>
+      <th>Phone No</th>
+      <th>Gender</th>
+      <th>Hobbies</th>
+      <th>Enquiry Date</th>
+      <th>Action</th>
+      
+     
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of data">
+      <td>{{item.Name}}</td>
+      <td>{{item.InvoiceNo}}</td>
+      <td>{{item.Email}}</td>
+      <td>{{item.PhoneNo}}</td>
+      <td>{{item.gender}}</td>
+      <td>{{item.hobby}}</td>
+      <td>{{item.enquiryDate}}</td>
+    
+     <td>
+      <button mat-icon-button [routerLink]="['/detail',item.id]"><i class="fa fa-eye"></i></button>
+      <button (click)="edit(item.id)" mat-icon-button><i class="fa fa-pencil"></i></button>
+      <button (click)="delete(item.id)" mat-icon-button><i class="fa fa-trash"></i></button>  
+     </td>
+   
+    </tr>
+  </tbody>
+</table>
+

@@ -1,0 +1,160 @@
+<div class="registration-form m-3 p-4">
+    <form [formGroup]="registerForm"   novalidate>
+        <div class="row">
+            <div class="col-md-6 ">
+              <mat-form-field appearance="outline">
+                <mat-label>Name</mat-label>
+                <input formControlName="Name" matInput placeholder="Name" required>
+                
+                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+              </mat-form-field>
+
+            </div>
+            <div class="col-md-6">
+                <mat-form-field appearance="outline">
+                    <mat-label>InvoiceNo</mat-label>
+                    <input formControlName="InvoiceNo" matInput placeholder="InvoiceNo">
+                    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                  </mat-form-field>
+            </div>
+        
+       
+            <div class="col-md-6">
+              <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="Email" name="email">
+                <mat-error>Enter valid email address</mat-error>
+                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+              </mat-form-field>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field appearance="outline">
+                <mat-label>PhoneNo</mat-label>
+                <input formControlName="PhoneNo" matInput placeholder="PhoneNo" required pattern="[0-9]*" minlength="10" maxlength="10">
+              <mat-error>Enter valid mobile no.</mat-error>
+                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+              </mat-form-field>
+            </div>
+   
+        <div class="col-md-6">
+            <label id="example-radio-group-label">Gender :</label>
+            <mat-radio-group formControlName="gender" class="example-radio-group">
+              <mat-radio-button class="example-radio-button " *ngFor="let gender of ['Male','Female']" [value]="gender">
+                {{gender}}
+              </mat-radio-button>
+            </mat-radio-group>
+               
+        </div> 
+        <div class="col-md-6">
+            <label id="example-radio-group-label">Do you liked the products :</label>
+            <mat-radio-group formControlName="item"
+              
+              class="example-radio-group"
+              >
+              <mat-radio-button class="example-radio-button " *ngFor="let item of ['Yes','No']" [value]="item">
+                {{item}}
+              </mat-radio-button>
+            </mat-radio-group>
+               
+        </div> 
+        <div class="col-md-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Hobbies</mat-label>
+                <mat-select formControlName="hobby" multiple>
+                  <mat-option *ngFor="let hobby of HobbiesList" [value]="hobby">
+                    {{hobby}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+        </div>   
+        <div class="col-md-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Enquiry date</mat-label>
+                <input formControlName="enquiryDate" matInput [matDatepicker]="picker">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+        </div>   
+    </div>
+
+           <table class="table table-bordered rounded-3" formArrayName="products">
+      <thead class="bg-secondary text-light">
+        <tr>
+          <td>No.</td>
+          <td>Product Name</td>
+          <td>Quantity</td>
+          <td>Rate</td>
+          <td>Total</td>
+          <td>Action</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let item of getproducts.controls; let i = index"
+          [formGroupName]="i"
+        >
+          <td>{{ i + 1 }}</td>
+          <td>
+            <input
+              name="productName"
+              class="form-control"
+              formControlName="productName"
+            />
+          </td>
+          <td>
+            <input
+              type="number"
+              class="form-control"
+              formControlName="quantity"
+              (change)="calculateamount(i)"
+            />
+          </td>
+          <td>
+            <input
+              type="number"
+              class="form-control"
+              formControlName="rate"
+              (change)="calculateamount(i)"
+            />
+          </td>
+          <td>
+            <input
+              type="number"
+              class="form-control"
+              formControlName="amount"
+              [value]="calculateamount(i)"
+              readonly
+            />
+          </td>
+          <td>
+            <a class="btn btn-danger" (click)="removeProduct(i)">[-]</a>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="6">
+            <a (click)="addproduct()" class="btn btn-success">[+]</a>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+ 
+
+  <div class="form-group">
+    <label for="totalAmount">Total Amount</label>
+    <input
+      type="number"
+      class="form-control"
+      formControlName="totalAmount"
+      (change)="calculateTotal()"
+      readonly
+    />
+  </div>
+
+    <button *ngIf="!isUPdateActive" (click)="onsubmit()"class="mt-4"mat-raised-button>Submit</button>
+    <button *ngIf="isUPdateActive"(click)="update()"class="mt-4"mat-raised-button>update</button>
+    </form>
+    
+</div>
